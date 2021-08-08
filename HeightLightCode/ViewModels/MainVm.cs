@@ -625,6 +625,8 @@ namespace HeightLightCode.ViewModels
             var mainFrame = _chromWebBrowser.GetBrowser().MainFrame;
             mainFrame.SelectAll();
             mainFrame.Copy();
+            var text= Clipboard.GetText(TextDataFormat.Html);
+            Debug.WriteLine(text);
         }
         /// <summary>
         /// 更改Html文件，重新加载渲染网页
