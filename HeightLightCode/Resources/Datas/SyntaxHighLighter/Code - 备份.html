@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <script type="text/javascript" src="scripts/shCore.js"></script>
+  <script id="codeTypeJs" type="text/javascript" src="scripts/shBrushPhp.js"></script>
+  <link id="css" type="text/css" rel="stylesheet" href="styles/shCoreDefault.css" />
+  <script type="text/javascript">
+
+    // 是否开启行号
+    function SwitchGutter(isOpen) {
+      //行号
+      SyntaxHighlighter.defaults['gutter'] = isOpen;
+    }
+    //更改代码样式
+    function ChangStyleType(type) {
+      var css = document.getElementById("css");
+      if ("Default" == type)
+        css.setAttribute("href", "styles/shCoreDefault.css");
+      if ("Emacs" == type)
+        css.setAttribute("href", "styles/shCoreEmacs.css");
+      if ("Django" == type)
+        css.setAttribute("href", "styles/shCoreDjango.css");
+      if ("Eclipse" == type)
+        css.setAttribute("href", "styles/shCoreEclipse.css");
+      if ("FadeToGrey" == type)
+        css.setAttribute("href", "styles/shCoreFadeToGrey.css");
+      if ("MDUltra" == type)
+        css.setAttribute("href", "styles/shCoreMDUltra.css");
+      if ("Midnight" == type)
+        css.setAttribute("href", "styles/shCoreMidnight.css");
+      if ("RDark" == type)
+        css.setAttribute("href", "styles/shCoreRDark.css");
+    }
+    //更改字号、字体
+    function ChangeFont(fontFamily, fontSize) {
+      var styleContent = '.syntaxhighlighter a,';
+      styleContent = styleContent + '.syntaxhighlighter div,';
+      styleContent = styleContent + '.syntaxhighlighter code,';
+      styleContent = styleContent + '.syntaxhighlighter table,';
+      styleContent = styleContent + '.syntaxhighlighter table td,';
+      styleContent = styleContent + '.syntaxhighlighter table tr,';
+      styleContent = styleContent + '.syntaxhighlighter table tbody,';
+      styleContent = styleContent + '.syntaxhighlighter table thead,';
+      styleContent = styleContent + '.syntaxhighlighter table caption,';
+      styleContent = styleContent + '.syntaxhighlighter textarea';
+      styleContent = styleContent + '{';
+      styleContent = styleContent + 'font-family:' + fontFamily + "!important;";
+      styleContent = styleContent + 'font-size:' + fontSize + 'px !important;';
+      styleContent = styleContent + 'line-height:1.2em !important;';
+      styleContent = styleContent + "}";
+
+      var fontStyle = document.createElement('style');
+      fontStyle.type = 'text/css';
+      document.getElementsByTagName('head')[0].appendChild(fontStyle);
+      fontStyle.appendChild(document.createTextNode(styleContent))
+    }
+    //更改代碼語言
+    function ChangeCodeType(codeType) {
+      // var codeTypeJs=document.getElementById('codeTypeJs');
+      // var codeTypeContent ='scripts/shBrush'+codeType+'.js'
+      // codeTypeJs.setAttribute("src", codeTypeContent);
+      var codeBrush = 'brush:' + codeType;
+      var preElem = document.getElementById('code_pre');
+      preElem.className = codeBrush;
+    }
+
+    function InitSetting() {
+      
+      //工具栏
+      SyntaxHighlighter.defaults['toolbar'] = false;
+      //滚动条
+      var initstyle = document.createElement('style');
+      initstyle.innerHTML = 'body::-webkit-scrollbar{width:0 !important;background:transparent}';
+      document.head.appendChild(initstyle);
+    }
+
+    function HeightLight(codeStyleType,codeType,fontFamily,fontSize,gutterStatus) 
+    {
+      //更改样式
+      ChangStyleType(codeStyleType);
+      //更改代码语言
+      ChangeCodeType(codeType);
+      //更改字体、字号
+      ChangeFont(fontFamily, fontSize);
+      SwitchGutter(gutterStatus);
+      InitSetting();
+    }
+    
+    window.onload = function () {
+      //CShape代碼調用方法
+      HeightLight('Default','Php','微软雅黑',30,false);
+    }
+    SyntaxHighlighter.all();
+    // SyntaxHighlighter.all();
+  </script>
+</head>
+
+<body>
+  <pre id="code_pre" class="brush:php">
+    /* ---示例代码----*/
+    function echo (){
+      var a="this is a example";
+      alert("hello world "+a);
+    }
+    /* ---示例代码----*/
+	 </pre>
+</body>
+
+</html>

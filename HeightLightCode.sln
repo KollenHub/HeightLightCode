@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31424.327
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HeightLightCode", "HeightLightCode\HeightLightCode.csproj", "{B0E1E5E6-AB56-4A68-8F20-B54BEDCAE8BB}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "HeightLightCodeSetup", "HeightLightCodeSetup\HeightLightCodeSetup.vdproj", "{E02B23E5-27DF-4485-A31C-A226E35A9EA5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B0E1E5E6-AB56-4A68-8F20-B54BEDCAE8BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0E1E5E6-AB56-4A68-8F20-B54BEDCAE8BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0E1E5E6-AB56-4A68-8F20-B54BEDCAE8BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0E1E5E6-AB56-4A68-8F20-B54BEDCAE8BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E02B23E5-27DF-4485-A31C-A226E35A9EA5}.Debug|Any CPU.ActiveCfg = Debug
+		{E02B23E5-27DF-4485-A31C-A226E35A9EA5}.Release|Any CPU.ActiveCfg = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DF3FEF4F-6DE7-4A71-B533-C392356A5921}
+	EndGlobalSection
+EndGlobal

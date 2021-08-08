@@ -1,0 +1,138 @@
+﻿<Window x:Class="HeightLightCode.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:ui="clr-namespace:HeightLightCode.UI"
+        xmlns:vm="clr-namespace:HeightLightCode.ViewModels"
+        xmlns:cefSharp="clr-namespace:CefSharp.Wpf;assembly=CefSharp.Wpf"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:vb="clr-namespace:HeightLightCode.VMBase"
+        mc:Ignorable="d"
+        Title="代码高亮软件" Height="450" MinHeight="450" MinWidth="800"  WindowStyle="None" AllowsTransparency="True" x:Name="mainWin"
+        Width="800" Icon="..\Resources\YI32.png" ResizeMode="CanResizeWithGrip"  WindowStartupLocation="CenterScreen" Padding="0"
+        ui:EllipseClipper.ClipReferObject="{Binding ElementName=toolbarImage}" Topmost="True"
+        ui:EllipseClipper.IsWinClip="{Binding IsClip}" BorderThickness="1" BorderBrush="LightGray" ShowInTaskbar="False">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding WinInitCmd}" 
+                                   CommandParameter="{Binding ElementName=mainWin}"></i:InvokeCommandAction>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Window.Resources>
+        <ResourceDictionary Source="..\UI\MainDict.xaml"></ResourceDictionary>
+    </Window.Resources>
+    <Window.DataContext>
+        <vm:MainVm></vm:MainVm>
+    </Window.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="55"/>
+            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="40"></RowDefinition>
+        </Grid.RowDefinitions>
+        <StackPanel Height="25" Orientation="Horizontal" Grid.Row="1" VerticalAlignment="Center" Margin="10 0 0 0">
+            <TextBlock Text="字体:" VerticalAlignment="Center" Margin="0 0 3 0"></TextBlock>
+            <ComboBox ItemsSource="{Binding FontFamilyCollection,UpdateSourceTrigger=PropertyChanged}"
+                      SelectedItem="{Binding FontFamily,UpdateSourceTrigger=PropertyChanged}"
+                      Width="180" Margin="0 0 10 0"></ComboBox>
+            <TextBlock Text="字号:" VerticalAlignment="Center" Margin="0 0 3 0"></TextBlock>
+            <ComboBox ItemsSource="{Binding FontSizeCollection,UpdateSourceTrigger=PropertyChanged}"
+                      SelectedItem="{Binding FontSize,UpdateSourceTrigger=PropertyChanged}"
+                      Width="100" Margin="0 0 10 0"></ComboBox>
+            <TextBlock Text="代码样式:" VerticalAlignment="Center" Margin="0 0 3 0"></TextBlock>
+            <ComboBox  ItemsSource="{Binding CodeStyleCollection,UpdateSourceTrigger=PropertyChanged}"
+                       SelectedItem="{Binding CodeStyle,UpdateSourceTrigger=PropertyChanged}"
+                       Width="100" Margin="0 0 10 0"></ComboBox>
+            <TextBlock Text="编程语言:" VerticalAlignment="Center" Margin="0 0 3 0"></TextBlock>
+            <ComboBox ItemsSource="{Binding CodeLanguageCollection,UpdateSourceTrigger=PropertyChanged}"
+                      SelectedItem="{Binding CodeLanguage,UpdateSourceTrigger=PropertyChanged}"
+                      Width="100" Margin="0 0 10 0"></ComboBox>
+            <TextBlock Text="代码行号:" VerticalAlignment="Center" Margin="0 0 3 0"></TextBlock>
+            <CheckBox IsChecked="{Binding GutterStatus,UpdateSourceTrigger=PropertyChanged}" Grid.Row="3"
+                      HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#8a8a8a" Padding="0">
+                <CheckBox.LayoutTransform>
+                    <ScaleTransform ScaleX="1.5" ScaleY="1.5" />
+                </CheckBox.LayoutTransform>
+            </CheckBox>
+        </StackPanel>
+        <GroupBox Grid.Row="2" Header="预览窗口" Margin="10 0 10 0">
+            <cefSharp:ChromiumWebBrowser Grid.Row="2" MenuHandler="{StaticResource menuHandler}" x:Name="ChromBrower"
+                                        />
+        </GroupBox>
+
+        <!--标题栏-->
+        <Grid Background="#e7eaed">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseMove">
+                    <vb:YIEventToCommand Command="{Binding WindowMoveCmd}" 
+                                         PassToEventArgs="True"></vb:YIEventToCommand>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="55"></ColumnDefinition>
+                <ColumnDefinition Width="auto"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Image Margin="5" x:Name="toolbarImage" HorizontalAlignment="Center" VerticalAlignment="Center"
+                   Source="..\Resources\YI64.png" Stretch="Fill" >
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseLeftButtonUp">
+                        <i:InvokeCommandAction Command="{Binding TitleImageUpCmd}" CommandParameter="{Binding ElementName=toolbarImage}"></i:InvokeCommandAction>
+                    </i:EventTrigger>
+                    <i:EventTrigger EventName="MouseLeftButtonDown">
+                        <i:InvokeCommandAction Command="{Binding TitleImageDownCmd}" CommandParameter="{Binding ElementName=toolbarImage}"></i:InvokeCommandAction>
+                    </i:EventTrigger>
+                    <i:EventTrigger EventName="MouseEnter">
+                        <i:InvokeCommandAction Command="{Binding TitleImageEnterCmd}" CommandParameter="{Binding ElementName=toolbarImage}"></i:InvokeCommandAction>
+                    </i:EventTrigger>
+                    <i:EventTrigger EventName="MouseLeave">
+                        <i:InvokeCommandAction Command="{Binding TitleImageLeaveCmd}" CommandParameter="{Binding ElementName=toolbarImage}"></i:InvokeCommandAction>
+                    </i:EventTrigger>
+                    <i:EventTrigger EventName="MouseRightButtonDown">
+                        <i:InvokeCommandAction Command="{Binding TitleImageRightDownCmd}" CommandParameter="{Binding ElementName=toolbarImage}"></i:InvokeCommandAction>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Image>
+            <TextBlock Grid.Column="1"   FontSize="20" Text="代码高亮软件" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="#4c4c4c"></TextBlock>
+            <WrapPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="2">
+                <Button Visibility="{Binding PinVisiblity, UpdateSourceTrigger=PropertyChanged,
+                        Converter={StaticResource reverseVisiblityConverter}}"  
+                        ToolTip="将窗体固定在最前"
+                        Style="{StaticResource toolbarBtnStyle}" Command="{Binding PinCmd}">
+                    <Image Source="..\Resources\窗口非置顶状态.png" Stretch="Uniform" Height="20" Width="20"></Image>
+                </Button>
+
+                <Button Visibility="{Binding PinVisiblity,UpdateSourceTrigger=PropertyChanged}"  
+                        Style="{StaticResource toolbarBtnStyle}" Command="{Binding UnpinCmd}"
+                        ToolTip="解除窗口置顶状态">
+                    <Image Source="..\Resources\窗口置顶状态.png" Stretch="Uniform" Height="20" Width="20"></Image>
+                </Button>
+
+                <Button Command="{Binding MinimizedCmd}" Style="{StaticResource toolbarBtnStyle}">
+                    <Image Source="..\Resources\最小化.png" Stretch="Uniform" Height="20" Width="20"></Image>
+                </Button>
+
+                <Button Visibility="{Binding NormalVisiblity,UpdateSourceTrigger=PropertyChanged,
+                        Converter={StaticResource reverseVisiblityConverter}}"
+                        Command="{Binding MaximizedCmd}" Style="{StaticResource toolbarBtnStyle}">
+                    <Image Source="..\Resources\最大化.png" Stretch="Uniform" Height="20" Width="20"></Image>
+                </Button>
+
+                <Button Visibility="{Binding NormalVisiblity,UpdateSourceTrigger=PropertyChanged}"
+                        Command="{Binding NormalCmd}" Style="{StaticResource toolbarBtnStyle}">
+                    <Image Source="..\Resources\缩小.png" Stretch="Uniform" Height="20" Width="20"></Image>
+                </Button>
+                <Button Command="{Binding CloseCmd}" Style="{StaticResource toolbarBtnStyle}">
+                    <Image Source="..\Resources\关闭.png" Stretch="Uniform" Height="20" Width="20"></Image>
+                </Button>
+            </WrapPanel>
+        </Grid>
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 0 10 0">
+            <Button Template="{StaticResource ButtonTemplate}" Command="{Binding PasteCmd}" Content="粘贴" Width="70" Height="23"></Button>
+            <Button Template="{StaticResource ButtonTemplate}" Command="{Binding CopyCmd}" Margin="10 0 0 0" Content="复制" Width="70" Height="23"></Button>
+        </StackPanel>
+        
+    </Grid>
+</Window>
